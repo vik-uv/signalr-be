@@ -1,4 +1,4 @@
-# signalr-be
+# Notification service
 The main goal of this project is an investigation of possibilities of data exchange using sockets and Azure serverless services.
 It presents a simple function to listen the CosmosDB table changes and show them on a form
 
