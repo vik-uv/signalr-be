@@ -1,0 +1,25 @@
+<p-tabView [(activeIndex)]="tabIndex">
+    <p-tabPanel *ngFor="let group of groups" [header]="group">
+        <div class="flex justify-content-between">
+            <div><h3>{{ group }}</h3></div>
+            <div><input pButton class="p-button-raised" type="button" (click)="onAdd()" value="Add message"/></div>
+        </div>
+        <p-table [value]="getGroupMessaged(group)" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr><th>ID</th><th>Date</th><th>Latency</th><th>Group</th><th>Content</th></tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-message>
+                <tr>
+                    <td>{{ message.id }}</td>
+                    <td>{{ message.datetime | date : 'medium'}}</td>
+                    <td>{{ message.latency}}</td>
+                    <td>{{ message.group }}</td>
+                    <td>{{ message.content }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-tabPanel>
+</p-tabView>
+<p-dialog position="bottom" [resizable]="false" [showHeader]="false" [modal]="true" [(visible)]="isModalVisible" styleClass="modal-window">
+    <app-add-message [selectedGroup]="groups[tabIndex]" (messageAdded)="onAdded($event)"></app-add-message>
+</p-dialog>

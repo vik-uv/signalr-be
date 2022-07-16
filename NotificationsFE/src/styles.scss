@@ -1,0 +1,19 @@
+body {
+    font-family: var(--font-family);
+    font-weight: 400;
+    color: var(--text-color);
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+    background: var(--surface-ground);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.fixed-label {
+    width: 5rem;
+}
+
+.modal-window {
+    background: var(--surface-ground);
+}

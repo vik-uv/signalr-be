@@ -1,0 +1,20 @@
+<form [formGroup]="form">
+  <div class="field grid">
+      <label for="input-group" class="col-fixed" class="fixed-label">Group</label>
+      <div class="col" *ngIf="!selectedGroup">
+        <p-dropdown id="input-group" [options]="groups" formControlName="group" optionLabel="name" optionValue="code"></p-dropdown>
+      </div>
+      <div class="col font-semibold" *ngIf="selectedGroup">
+        {{ selectedGroup }}
+      </div>
+  </div>
+  <div class="field grid">
+    <label for="input-group" class="col-fixed" class="fixed-label">Message</label>
+    <div class="col">
+      <textarea pInputTextarea formControlName="content" maxlength="100"></textarea>
+    </div>
+  </div>
+  <div class="field grid justify-content-end">
+      <input pButton class="p-button-raised" type="button" (click)="onSend()" *ngIf="!isBusy" value="Send"/>
+  </div>
+</form>

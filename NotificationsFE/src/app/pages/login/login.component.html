@@ -1,0 +1,20 @@
+<form [formGroup]="form">
+    <div class="field grid">
+        <label for="input-username" class="col-fixed" class="fixed-label">Username</label>
+        <div class="col">
+            <input pInputText id="input-username" type="text" formControlName="login" maxlength="20" />
+        </div>
+    </div>
+    <div class="field grid">
+        <label for="input-password" class="col-fixed" class="fixed-label">Password</label>
+        <div class="col">
+            <input pInputText id="input-passwprd" type="password" formControlName="password" maxlength="20" />
+        </div>
+    </div>
+    <div class="field grid">
+        <input pButton type="button" class="p-button-raised" (click)="onSend()" *ngIf="!isBusy" value="Login"/>
+        <p class="error" *ngIf="error">
+            {{ error }}
+        </p>
+    </div>
+</form>
