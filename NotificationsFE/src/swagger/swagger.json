@@ -1,0 +1,329 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "OpenAPI Document on Azure Functions",
+    "version": "1.0.0"
+  },
+  "host": "localhost:7071",
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/index": {
+      "get": {
+        "tags": [
+          "signalr"
+        ],
+        "summary": "Gets the test HTML page",
+        "description": "This gets the test HTML page.",
+        "operationId": "GetHomePage",
+        "produces": [
+          "text/html"
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "type": "string"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/negotiate": {
+      "get": {
+        "tags": [
+          "signalr"
+        ],
+        "summary": "Gets SignalR params",
+        "description": "This gets the SignalR params.",
+        "operationId": "Negotiate",
+        "produces": [
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "$ref": "#/definitions/signalRConnectionInfo"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/ConnectionOk": {
+      "get": {
+        "tags": [
+          "connection"
+        ],
+        "summary": "Gets OK text",
+        "description": "This gets OK text if everytinh id OK.",
+        "operationId": "ConnectionOk",
+        "produces": [
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns the response",
+            "schema": {
+              "type": "string"
+            },
+            "x-ms-summary": "The response"
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/messages/{count}": {
+      "get": {
+        "tags": [
+          "message"
+        ],
+        "summary": "Get messages list",
+        "description": "This gets messages list.",
+        "operationId": "GetMessagesList",
+        "produces": [
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "count",
+            "description": "Count of records to get",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "x-ms-summary": "Count of records to get",
+            "x-ms-visibility": "important"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns list of messages",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/message"
+              }
+            },
+            "x-ms-summary": "List of messages"
+          }
+        },
+        "security": [
+          {
+            "function_key": []
+          }
+        ],
+        "x-ms-visibility": "important"
+      }
+    },
+    "/message/{id}": {
+      "get": {
+        "tags": [
+          "message"
+        ],
+        "summary": "Get message by id",
+        "description": "This gets message by id.",
+        "operationId": "GetMessage",
+        "produces": [
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Message ID",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Message ID",
+            "x-ms-visibility": "important"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns message",
+            "schema": {
+              "$ref": "#/definitions/message"
+            },
+            "x-ms-summary": "Message"
+          }
+        },
+        "security": [
+          {
+            "function_key": []
+          }
+        ],
+        "x-ms-visibility": "important"
+      },
+      "delete": {
+        "tags": [
+          "message"
+        ],
+        "summary": "Delete a message",
+        "description": "This deletes a message.",
+        "operationId": "DeleteMessage",
+        "produces": [
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Message ID",
+            "required": true,
+            "type": "string",
+            "x-ms-summary": "Message ID",
+            "x-ms-visibility": "important"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns operation status",
+            "schema": {
+              "$ref": "#/definitions/statusCodeResult"
+            },
+            "x-ms-summary": "Status"
+          }
+        },
+        "security": [
+          {
+            "function_key": []
+          }
+        ],
+        "x-ms-visibility": "important"
+      }
+    },
+    "/message": {
+      "post": {
+        "tags": [
+          "message"
+        ],
+        "summary": "Add a message",
+        "description": "This adds a message.",
+        "operationId": "AddMessage",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns operation status",
+            "schema": {
+              "$ref": "#/definitions/statusCodeResult"
+            },
+            "x-ms-summary": "Status"
+          }
+        },
+        "security": [
+          {
+            "function_key": []
+          }
+        ],
+        "x-ms-visibility": "important"
+      },
+      "put": {
+        "tags": [
+          "message"
+        ],
+        "summary": "Update a message",
+        "description": "This updates a message.",
+        "operationId": "UpdateMessage",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/message"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This returns operation status",
+            "schema": {
+              "$ref": "#/definitions/statusCodeResult"
+            },
+            "x-ms-summary": "Status"
+          }
+        },
+        "security": [
+          {
+            "function_key": []
+          }
+        ],
+        "x-ms-visibility": "important"
+      }
+    }
+  },
+  "definitions": {
+    "message": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "datetime": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "group": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        }
+      }
+    },
+    "signalRConnectionInfo": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "accessToken": {
+          "type": "string"
+        }
+      }
+    },
+    "statusCodeResult": {
+      "type": "object",
+      "properties": {
+        "statusCode": {
+          "format": "int32",
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "function_key": {
+      "type": "apiKey",
+      "name": "code",
+      "in": "query"
+    }
+  }
+}

@@ -34,7 +34,7 @@ export class ApiService extends ServiceBase {
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         super();
         this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "http://localhost:7071/api";
     }
 
     /**
