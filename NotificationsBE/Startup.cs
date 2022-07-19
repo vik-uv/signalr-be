@@ -6,6 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
+using Azure.Identity;
+using System.Reflection;
+using Azure.Security.KeyVault.Secrets;
+using System.Data.Common;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace NotificationsBE
@@ -22,8 +26,12 @@ namespace NotificationsBE
 
             builder.Services.AddSingleton<IConfiguration>(config);
 
-            var ep = config["DbEndpoint"];
-            var pk = config["DbPrimaryKey"];
+            var client = new SecretClient(vaultUri: new Uri(config["AzureWebJobsSecretStorageKeyVaultUri"]), credential: new DefaultAzureCredential());
+            builder.Services.AddSingleton<SecretClient>(client);
+
+            var csb = new DbConnectionStringBuilder { ConnectionString = config.GetConnectionString("CosmosDbConnectionString") };
+            var ep = csb.TryGetValue("AccountEndpoint", out object key) ? key.ToString() : config["DbEndpoint"];
+            var pk = csb.TryGetValue("AccountKey", out object uri) ? uri.ToString() : config["DbPrimaryKey"];
 
             builder.Services.AddSingleton((s) => new DocumentClient(new Uri(ep), pk));
             builder.Services.AddTransient<IMessageService, MessageService>();

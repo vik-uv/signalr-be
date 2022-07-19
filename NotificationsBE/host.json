@@ -7,5 +7,7 @@
         "excludedTypes": "Request"
       }
     }
-  }
+  },
+  "AzureWebJobsSecretStorageType": "keyvault",
+  "AzureWebJobsSecretStorageKeyVaultUri": "https://notificationapp-kv.vault.azure.net/"
 }

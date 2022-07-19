@@ -10,22 +10,26 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Linq;
+using Azure.Security.KeyVault.Secrets;
 
 namespace NotificationsBE.DB
 {
     public class MessageService : IMessageService
     {
         private readonly DocumentClient _client;
-        private readonly IConfiguration _configuration;
+        private readonly string _database;
+        private readonly string _collection;
         private readonly Uri _uri;
 
         public MessageService(
             DocumentClient client,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            SecretClient secretClient)
         {
             _client = client;
-            _configuration = configuration;
-            _uri = UriFactory.CreateDocumentCollectionUri(configuration["DatabaseName"], configuration["CollectionName"]);
+            _database = secretClient.GetSecret("DatabaseName")?.Value.Value ?? configuration["DatabaseName"];
+            _collection = secretClient.GetSecret("CollectionName")?.Value.Value ?? configuration["CollectionName"];
+            _uri = UriFactory.CreateDocumentCollectionUri(_database, _collection);
         }
 
         public async Task<Message> AddMessageAsync(Message message, CancellationToken cancellationToken)
@@ -36,13 +40,13 @@ namespace NotificationsBE.DB
 
         public async Task DeleteMessageAsync(string id, CancellationToken cancellationToken)
         {
-            var documentUri = UriFactory.CreateDocumentUri(_configuration["DatabaseName"], _configuration["CollectionName"], id);
+            var documentUri = UriFactory.CreateDocumentUri(_database, _collection, id);
             await _client.DeleteDocumentAsync(documentUri, null, cancellationToken);
         }
 
         public async Task<Message> GetMessageAsync(string id, CancellationToken cancellationToken)
         {
-            var documentUri = UriFactory.CreateDocumentUri(_configuration["DatabaseName"], _configuration["CollectionName"], id);
+            var documentUri = UriFactory.CreateDocumentUri(_database, _collection, id);
             return await _client.ReadDocumentAsync<Message>(documentUri, new RequestOptions { PartitionKey = new PartitionKey(id) }, cancellationToken);
         }
 

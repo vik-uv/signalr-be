@@ -1,19 +1,17 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Documents;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using NotificationsBE.Models;
@@ -68,9 +66,6 @@ namespace NotificationsBE
         {
             if (documents != null && documents.Count > 0)
             {
-                log.LogInformation($"Documents modified: {documents.Count}");
-                log.LogInformation($"First document Id: {documents[0].Id}");
-
                 await signalRMessages.AddAsync(
                     new SignalRMessage
                     {

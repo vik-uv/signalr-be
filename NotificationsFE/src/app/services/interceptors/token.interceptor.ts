@@ -8,7 +8,7 @@ import {
 
 import { Observable } from 'rxjs';
 
-export const LocalStogageAuthToken = 'NotificationAuthToken';
+export const LocalStorageAuthToken = 'NotificationAuthToken';
 
 @Injectable()
 export class TokenInterceptor {
@@ -16,7 +16,7 @@ export class TokenInterceptor {
 private token: string | null;
 
 constructor() {
-    this.token = localStorage.getItem(LocalStogageAuthToken);
+    this.token = localStorage.getItem(LocalStorageAuthToken);
 }
 
 intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

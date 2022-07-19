@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LocalStogageAuthToken } from 'src/app/services/interceptors/token.interceptor';
+import { LocalStorageAuthToken } from 'src/app/services/interceptors/token.interceptor';
 import { SignalRService } from 'src/app/services/signalr.service';
 
 @Component({
@@ -24,13 +24,13 @@ export class LoginComponent  {
     if (this.form.invalid) return;
     this.isBusy = true;
     const { login, password } = this.form.value;
-    localStorage.setItem(LocalStogageAuthToken, this.getToken(login, password));
+    localStorage.setItem(LocalStorageAuthToken, this.getToken(login, password));
     this.service.connectionOk().subscribe({
       next: (data) => {
         this.router.navigateByUrl('');
       },
       error: (err) => {
-        this.error = "Cannot login now, server is down or credintial are not correct";
+        this.error = "Cannot login now, server is down or credential are not correct";
         this.isBusy = false;
         console.error(err);
       },
